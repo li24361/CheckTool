@@ -29,14 +29,14 @@ VSVersionInfo(
       [
       StringTable(
         u'080904b0',
-        [StringStruct(u'CompanyName', u'Atlassian'),
-        StringStruct(u'FileDescription', u'This installer database contains the logic and data required to install SourceTree.'),
-        StringStruct(u'FileVersion', u'1.5.2'),
-        StringStruct(u'InternalName', u'SourceTreeSetup_1.5.2'),
-        StringStruct(u'LegalCopyright', u'Copyright (C) 2014 Atlassian'),
-        StringStruct(u'OriginalFileName', u'SourceTreeSetup_1.5.2.exe'),
-        StringStruct(u'ProductName', u'SourceTree'),
-        StringStruct(u'ProductVersion', u'1.5.2')])
+        [StringStruct(u'CompanyName', u'HStyle'),
+        StringStruct(u'FileDescription', u'gana项目组开发，方便检测照片与挑选图片！'),
+        StringStruct(u'FileVersion', u'1.1.1'),
+        StringStruct(u'InternalName', u'Checker1.1.1'),
+        StringStruct(u'LegalCopyright', u'Copyright (C) 2015 by lizhihao'),
+        StringStruct(u'OriginalFileName', u'Checker1.1.1.exe'),
+        StringStruct(u'ProductName', u'图片助手v1.1.1'),
+        StringStruct(u'ProductVersion', u'1.1.1')])
       ]), 
     VarFileInfo([VarStruct(u'Translation', [2057, 1200])])
   ]

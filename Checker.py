@@ -73,29 +73,45 @@ class CheckTool(QDialog, Ui_Dialog, QObject):
         self.lineEdit_4.setText(unicode(s, "utf8"))
 
     def importExcel(self, excelPath, src, des):
-        count = 0
         self.printSignal.emit(u"--------------------- 亲，图片挑选开始了！---------------------")
         data = xlrd.open_workbook(excelPath)
         table = data.sheets()[0]
         for sku in table.col_values(0):
-            srcdir = os.path.join(src, sku)
-            desdir = os.path.join(des, sku)
-            count += self.moveFile(srcdir, desdir)
-        self.printSignal.emit(u"--------------------- 亲，图片挑选结束了，已经给您选择了%d条！！---------------------" % count)
+            count = 0
+            for root, dirs, files in os.walk(src):
+                for d in dirs:
+                    if d.find(sku.strip()) != -1:
+                        srcDir = os.path.join(root, d)
+                        desDir = os.path.join(des, d)
+                        count += self.moveDicAndFile(srcDir, desDir)
+                for f in files:
+                    if f.find(sku.strip()) != -1:
+                        srcFile = os.path.join(root, f)
+                        desFile = os.path.join(des, f)
+                        count += self.moveDicAndFile(srcFile, desFile)
+            if count == 0:
+                self.printSignal.emit(u"警告：未找到[%s]对应的文件或文件夹，"
+                                      u"请检查选择的路径[%s]是否正确！" % (sku, src))
+        self.printSignal.emit(u"--------------------- 亲，图片挑选结束了，请查看！！---------------------")
         os.startfile(des)
 
-    def moveFile(self, src, des):
+    def moveDicAndFile(self, src, des):
         result = 0
-        if os.path.exists(des):
-            shutil.rmtree(des)
-        if os.path.exists(src):
+        if os.path.isdir(src):
+            if os.path.exists(des):
+                shutil.rmtree(des)
             shutil.copytree(src, des)
-            msg = u"%s -> %s 移动成功！！" % (src, des)
+            msg = u"信息：文件夹[%s] -> [%s] 复制成功！！" % (src, des)
             self.printSignal.emit(msg)
             result = 1
-        else:
-            msg = u"大亲啊，【%s】不存在，请瞅瞅Excel中数据是否正确呗！！！" % src
+        elif os.path.isfile(src):
+            shutil.copy2(src, des)
+            msg = u"信息：文件[%s] -> [%s] 复制成功！！" % (src, des)
             self.printSignal.emit(msg)
+            result = 1
+        # else:
+        #     msg = u"大亲啊，【%s】不存在，请瞅瞅Excel中数据是否正确呗！！！" % src
+        #     self.printSignal.emit(msg)
         return result
 
     def checkDir(self, rootDir):
