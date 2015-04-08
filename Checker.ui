@@ -90,7 +90,7 @@ p, li { white-space: pre-wrap; }
     <string notr="true">background:url(:/back/MainForm.jpg)</string>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -239,19 +239,54 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </widget>
+    <widget class="QRadioButton" name="copy">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>40</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>复制</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
+    </widget>
+    <widget class="QRadioButton" name="move">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>80</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>移动</string>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
+    </widget>
    </widget>
   </widget>
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
-     <x>480</x>
+     <x>460</x>
      <y>10</y>
-     <width>171</width>
+     <width>191</width>
      <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>Nade By Gana ，Have fun！</string>
+    <string>Gana项目组制作 ，请给红心哈 ^_^！</string>
    </property>
   </widget>
   <zorder>tabWidget</zorder>
@@ -263,4 +298,7 @@ p, li { white-space: pre-wrap; }
   <include location="D:/back.qrc"/>
  </resources>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>

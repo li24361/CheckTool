@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'C:\Users\Administrator\PycharmProjects\Checker\Checker.ui'
 #
-# Created: Wed Apr 01 12:26:13 2015
+# Created: Tue Apr 07 17:31:59 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -33,6 +33,7 @@ class Ui_Dialog(object):
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8("./picture/favicon.ico")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Dialog.setWindowIcon(icon)
+        Dialog.setWindowOpacity(3.0)
         Dialog.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.textBrowser = QtGui.QTextBrowser(Dialog)
         self.textBrowser.setGeometry(QtCore.QRect(10, 220, 651, 301))
@@ -97,13 +98,24 @@ class Ui_Dialog(object):
         self.lineEdit.setObjectName(_fromUtf8("lineEdit"))
         self.file = QtGui.QPushButton(self.splitter)
         self.file.setObjectName(_fromUtf8("file"))
+        self.copy = QtGui.QRadioButton(self.tab_2)
+        self.copy.setGeometry(QtCore.QRect(350, 40, 51, 21))
+        self.copy.setChecked(True)
+        self.copy.setObjectName(_fromUtf8("copy"))
+        self.buttonGroup = QtGui.QButtonGroup(Dialog)
+        self.buttonGroup.setObjectName(_fromUtf8("buttonGroup"))
+        self.buttonGroup.addButton(self.copy)
+        self.move = QtGui.QRadioButton(self.tab_2)
+        self.move.setGeometry(QtCore.QRect(350, 80, 51, 21))
+        self.move.setObjectName(_fromUtf8("move"))
+        self.buttonGroup.addButton(self.move)
         self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
         self.label_6 = QtGui.QLabel(Dialog)
-        self.label_6.setGeometry(QtCore.QRect(400, 10, 211, 21))
+        self.label_6.setGeometry(QtCore.QRect(460, 10, 191, 21))
         self.label_6.setObjectName(_fromUtf8("label_6"))
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -129,9 +141,10 @@ class Ui_Dialog(object):
         self.label.setText(_translate("Dialog", "文件目录", None))
         self.lineEdit.setText(_translate("Dialog", "请选择图片文件夹", None))
         self.file.setText(_translate("Dialog", "选择文件夹", None))
+        self.copy.setText(_translate("Dialog", "复制", None))
+        self.move.setText(_translate("Dialog", "移动", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Dialog", "挑选图片", None))
         self.label_6.setText(_translate("Dialog", "Gana项目组制作 ，请给红心哈 ^_^！", None))
-
 
 if __name__ == "__main__":
     import sys

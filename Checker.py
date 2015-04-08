@@ -43,9 +43,11 @@ class CheckTool(QDialog, Ui_Dialog, QObject):
         excelPath = unicode(self.lineEdit_3.text(), 'utf-8')
         src = unicode(self.lineEdit.text(), 'utf-8')
         des = unicode(self.lineEdit_2.text(), 'utf-8')
+        isCopy = self.copy.isChecked()
+        print isCopy
         if os.path.exists(src) and os.path.exists(excelPath) and os.path.exists(des):
             # self.importExcel(excelPath, src, des)
-            thread = threading.Thread(target=self.importExcel, args=(excelPath, src, des))
+            thread = threading.Thread(target=self.importExcel, args=(excelPath, src, des, isCopy))
             thread.start()
         else:
             msg = u"---------------亲，未找到该文件夹，请瞅瞅路径是否选对了呗！！----------------"
@@ -72,7 +74,7 @@ class CheckTool(QDialog, Ui_Dialog, QObject):
         s = QtGui.QFileDialog.getExistingDirectory(self, u"选择文件夹", "/")
         self.lineEdit_4.setText(unicode(s, "utf8"))
 
-    def importExcel(self, excelPath, src, des):
+    def importExcel(self, excelPath, src, des, isCopy):
         self.printSignal.emit(u"--------------------- 亲，图片挑选开始了！---------------------")
         data = xlrd.open_workbook(excelPath)
         table = data.sheets()[0]
@@ -83,19 +85,25 @@ class CheckTool(QDialog, Ui_Dialog, QObject):
                     if d.find(sku.strip()) != -1:
                         srcDir = os.path.join(root, d)
                         desDir = os.path.join(des, d)
-                        count += self.moveDicAndFile(srcDir, desDir)
+                        if isCopy:
+                            count += self.copyDicAndFile(srcDir, desDir)
+                        else:
+                            count += self.moveDicAndFile(srcDir, desDir)
                 for f in files:
                     if f.find(sku.strip()) != -1:
                         srcFile = os.path.join(root, f)
                         desFile = os.path.join(des, f)
-                        count += self.moveDicAndFile(srcFile, desFile)
+                        if isCopy:
+                            count += self.copyDicAndFile(srcFile, desFile)
+                        else:
+                            count += self.moveDicAndFile(srcFile, desFile)
             if count == 0:
                 self.printSignal.emit(u"警告：未找到[%s]对应的文件或文件夹，"
                                       u"请检查选择的路径[%s]是否正确！" % (sku, src))
         self.printSignal.emit(u"--------------------- 亲，图片挑选结束了，请查看！！---------------------")
         os.startfile(des)
 
-    def moveDicAndFile(self, src, des):
+    def copyDicAndFile(self, src, des):
         result = 0
         if os.path.isdir(src):
             if os.path.exists(des):
@@ -107,6 +115,25 @@ class CheckTool(QDialog, Ui_Dialog, QObject):
         elif os.path.isfile(src):
             shutil.copy2(src, des)
             msg = u"信息：文件[%s] -> [%s] 复制成功！！" % (src, des)
+            self.printSignal.emit(msg)
+            result = 1
+        # else:
+        #     msg = u"大亲啊，【%s】不存在，请瞅瞅Excel中数据是否正确呗！！！" % src
+        #     self.printSignal.emit(msg)
+        return result
+
+    def moveDicAndFile(self, src, des):
+        result = 0
+        if os.path.isdir(src):
+            if os.path.exists(des):
+                shutil.rmtree(des)
+            shutil.move(src, des)
+            msg = u"信息：文件夹[%s] -> [%s] 移动成功！！" % (src, des)
+            self.printSignal.emit(msg)
+            result = 1
+        elif os.path.isfile(src):
+            shutil.move(src, des)
+            msg = u"信息：文件[%s] -> [%s] 移动成功！！" % (src, des)
             self.printSignal.emit(msg)
             result = 1
         # else:
